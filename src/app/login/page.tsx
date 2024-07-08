@@ -21,7 +21,7 @@ function LoginPage({ searchParams }: LoginPageProps) {
         <h1 className="my-2 text-white font-bold me-auto">ExpenseT</h1>
       </div>
       <div className="w-11/12 md:w-1/2 xl:w-1/4 bg-white p-5 rounded">
-        <LoginForm error={error} />
+        <LoginForm />
       </div>
     </div>
   );
