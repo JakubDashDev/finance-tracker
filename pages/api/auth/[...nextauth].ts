@@ -2,10 +2,10 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next";
 import { getServerSession, NextAuthOptions } from "next-auth";
-import prisma from "../../../../../lib/prismadb";
 import { compare, hash } from "bcrypt";
 import { revalidatePath } from "next/cache";
 import { User } from "@prisma/client";
+import prisma from "../../../lib/prismadb";
 
 export const config = {
   secret: process.env.AUTH_SECRET,
