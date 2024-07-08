@@ -1,8 +1,8 @@
 "use server";
 
-import { auth } from "@/app/api/auth/[...nextauth]/route";
 import prisma from "../../lib/prismadb";
 import { revalidatePath } from "next/cache";
+import { auth } from "../../pages/api/auth/[...nextauth]";
 
 interface GetUserBalanceResponse {
   message?: string;
