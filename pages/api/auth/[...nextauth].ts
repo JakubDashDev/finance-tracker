@@ -114,7 +114,7 @@ export const config = {
 
 const handler = NextAuth(config);
 
-export function auth(
+export default function auth(
   ...args: [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]] | [NextApiRequest, NextApiResponse] | []
 ) {
   return getServerSession(...args, config);
