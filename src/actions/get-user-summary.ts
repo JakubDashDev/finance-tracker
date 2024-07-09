@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "../../lib/prismadb";
-import { auth } from "../../pages/api/auth/[...nextauth]";
+import auth from "../../pages/api/auth/[...nextauth]";
 
 interface GetUserSummaryResponse {
   income?: number;

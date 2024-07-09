@@ -2,7 +2,7 @@
 
 import prisma from "../../lib/prismadb";
 import { Transaction } from "@prisma/client";
-import { auth } from "../../pages/api/auth/[...nextauth]";
+import auth from "../../pages/api/auth/[...nextauth]";
 
 interface GetUserTransactionResponse {
   transactions?: Transaction[];
