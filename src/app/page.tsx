@@ -7,7 +7,7 @@ import Summary from "@/components/Summary";
 import TransactionList from "@/components/TransactionList/TransactionList";
 import { Suspense } from "react";
 import Loader from "@/components/common/Loader";
-import auth from "./api/auth/[...nextauth]";
+import { auth } from "./api/auth/[...nextauth]";
 
 export default async function Home() {
   const session = await auth();
