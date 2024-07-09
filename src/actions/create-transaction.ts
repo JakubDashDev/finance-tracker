@@ -3,7 +3,7 @@
 import { number, string, z } from "zod";
 import prisma from "../../lib/prismadb";
 import { revalidatePath } from "next/cache";
-import { auth } from "../app/api/auth/[...nextauth]/route";
+import { auth } from "../../lib/auth";
 
 interface CreateTransactionState {
   errors: {

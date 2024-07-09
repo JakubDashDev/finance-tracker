@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import { Button, Card, Divider, Skeleton, Table, TableBody, TableHeader } from "@nextui-org/react";
+import { Divider } from "@nextui-org/react";
 import HomeGuest from "@/components/HomeGuest";
 import AddTransaction from "@/components/AddTransaction/AddTransaction";
 import Balance from "@/components/Balance";
@@ -7,7 +7,7 @@ import Summary from "@/components/Summary";
 import TransactionList from "@/components/TransactionList/TransactionList";
 import { Suspense } from "react";
 import Loader from "@/components/common/Loader";
-import { auth } from "./api/auth/[...nextauth]/route";
+import { auth } from "../../lib/auth";
 
 export default async function Home() {
   const session = await auth();

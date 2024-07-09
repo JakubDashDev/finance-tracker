@@ -1,7 +1,7 @@
 "use server";
 
+import { auth } from "../../lib/auth";
 import prisma from "../../lib/prismadb";
-import { auth } from "../app/api/auth/[...nextauth]/route";
 
 interface GetUserBalanceResponse {
   balance?: number;
