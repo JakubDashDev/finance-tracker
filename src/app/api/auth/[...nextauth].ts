@@ -5,7 +5,7 @@ import { getServerSession, NextAuthOptions } from "next-auth";
 import { compare, hash } from "bcrypt";
 import { revalidatePath } from "next/cache";
 import { User } from "@prisma/client";
-import prisma from "../../../lib/prismadb";
+import prisma from "../../../../lib/prismadb";
 
 export const config = {
   secret: process.env.AUTH_SECRET,
@@ -114,7 +114,7 @@ export const config = {
 
 const handler = NextAuth(config);
 
-export default function auth(
+export function auth(
   ...args: [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]] | [NextApiRequest, NextApiResponse] | []
 ) {
   return getServerSession(...args, config);
