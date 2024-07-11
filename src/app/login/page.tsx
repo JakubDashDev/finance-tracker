@@ -1,6 +1,8 @@
 import LoginForm from "@/components/LoginForm";
 import Link from "next/link";
 import React from "react";
+import { auth } from "../../../lib/auth";
+import { redirect } from "next/navigation";
 
 interface LoginPageProps {
   searchParams: {
@@ -9,8 +11,11 @@ interface LoginPageProps {
   };
 }
 
-function LoginPage({ searchParams }: LoginPageProps) {
-  const { callbackUrl, error } = searchParams;
+async function LoginPage({ searchParams }: LoginPageProps) {
+  const session = await auth();
+  const { callbackUrl } = searchParams;
+
+  if (session?.user) redirect("/dashboard");
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">

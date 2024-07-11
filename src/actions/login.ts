@@ -38,5 +38,5 @@ export async function login(formState: LoginFormState, formData: FormData): Prom
 
   if (!res?.ok) return { errors: { _form: res?.error || undefined } };
 
-  redirect("/");
+  redirect("/dashboard");
 }

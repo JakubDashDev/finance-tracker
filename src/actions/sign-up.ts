@@ -48,5 +48,5 @@ export async function signup(formState: SignUpFormState, formData: FormData): Pr
 
   if (!res?.ok) return { errors: { _form: res?.error || undefined } };
 
-  redirect("/");
+  redirect("/dashboard");
 }

@@ -1,8 +1,13 @@
 import SignUpForm from "@/components/SignUpForm";
 import Link from "next/link";
 import React from "react";
+import { auth } from "../../../lib/auth";
+import { redirect } from "next/navigation";
 
-function SignUpPage() {
+async function SignUpPage() {
+  const session = await auth();
+
+  if (session?.user) redirect("/dashboard");
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="w-11/12 md:w-1/2 xl:w-1/4 flex items-center">
