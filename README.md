@@ -1,6 +1,6 @@
 # Finance Tracker
 
-Finance Tracker is a web application for managing personal finances, built with Next.js and TypeScript. It allows users to track expenses, incomes, and view financial reports.
+Finance Tracker is a web application for managing personal finances, built with Next.js and TypeScript. It allows users to track expenses, incomes, and view financial summary.
 
 ## Features
 - **Expense Tracking**: Log and categorize expenses.
