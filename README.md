@@ -19,7 +19,7 @@ Finance Tracker is a web application for managing personal finances, built with 
 ## Usage
 **Live:** https://finance-tracker-bftk7x0jf-jakubdotdevs-projects.vercel.app/ <br />
 **Login Credentials:** <br />
- email: test@test.com
+ email: test@test.com <br />
  password: 1234567890
 
 
