@@ -2,10 +2,14 @@
 
 import { auth } from "../../lib/auth";
 import prisma from "../../lib/prismadb";
-import { Transaction } from "@prisma/client";
+import { Category, Transaction } from "@prisma/client";
+
+export interface UserTransactions extends Transaction {
+  category?: Category;
+}
 
 interface GetUserTransactionResponse {
-  transactions?: Transaction[];
+  transactions?: UserTransactions[];
   error?: string;
 }
 
@@ -18,6 +22,7 @@ export async function getUserTransaction(): Promise<GetUserTransactionResponse> 
     const transactions = await prisma.transaction.findMany({
       where: { userId: session.user.id },
       orderBy: { createdAt: "desc" },
+      include: { category: true },
     });
 
     return { transactions };

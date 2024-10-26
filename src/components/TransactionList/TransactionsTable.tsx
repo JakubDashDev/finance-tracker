@@ -1,7 +1,9 @@
 "use client";
 import { DeleteTransaction } from "@/actions/delete-transaction";
+import { UserTransactions } from "@/actions/get-user-transaction";
 import {
   Button,
+  Chip,
   getKeyValue,
   Table,
   TableBody,
@@ -15,7 +17,7 @@ import { Transaction } from "@prisma/client";
 import React from "react";
 
 interface TransactionsTableProps {
-  transactions: Transaction[] | undefined;
+  transactions: UserTransactions[] | undefined;
 }
 
 function TransactionsTable({ transactions }: TransactionsTableProps) {
@@ -27,8 +29,8 @@ function TransactionsTable({ transactions }: TransactionsTableProps) {
     await DeleteTransaction(transactionId);
   };
 
-  const renderCell = React.useCallback((transaction: Transaction, columnKey: React.Key) => {
-    const cellValue = transaction[columnKey as keyof Transaction];
+  const renderCell = React.useCallback((transaction: UserTransactions, columnKey: React.Key) => {
+    const cellValue = transaction[columnKey as keyof UserTransactions];
 
     switch (columnKey) {
       case "title":
@@ -44,6 +46,20 @@ function TransactionsTable({ transactions }: TransactionsTableProps) {
 
       case "description":
         return <span>{transaction.description}</span>;
+
+      case "category":
+        return transaction.category ? (
+          <Chip
+            className="capitalize"
+            size="sm"
+            variant="flat"
+            style={{ backgroundColor: transaction.category?.color }}
+          >
+            {transaction.category?.name}
+          </Chip>
+        ) : (
+          <></>
+        );
 
       case "action":
         return (
@@ -66,6 +82,7 @@ function TransactionsTable({ transactions }: TransactionsTableProps) {
           AMOUNT
         </TableColumn>
         <TableColumn key="description">DESCRIPTION</TableColumn>
+        <TableColumn key="category">CATEGORY</TableColumn>
         <TableColumn key="action" width={40}>
           ACTION
         </TableColumn>

@@ -10,6 +10,7 @@ interface CreateTransactionState {
     title?: string[];
     amount?: string[];
     type?: string[];
+    categoryId?: string[];
     description?: string[];
     _form?: string[];
   };
@@ -26,6 +27,7 @@ const createTransactionFormValidation = z.object({
     .positive("Value have to be positive")
     .multipleOf(0.01, "Please enter correct value"),
   type: string().min(1, "Please selet an option"),
+  categoryId: string().nullable(),
   description: string().optional(),
 });
 
@@ -37,12 +39,14 @@ export async function createTransaction(
   const amount = formData.get("amount");
   const type = formData.get("type");
   const description = formData.get("description");
+  const categoryId = formData.get("categoryId");
 
-  //⬇️FORM VALIDATION⬇️
+  //FORM VALIDATION
   const validation = createTransactionFormValidation.safeParse({
     title,
     amount,
     type,
+    categoryId,
     description,
   });
 
@@ -51,9 +55,9 @@ export async function createTransaction(
       errors: validation.error.flatten().fieldErrors,
       success: false,
     };
-  //⬆️FORM VALIDATION⬆️
+  //FORM VALIDATION
 
-  //⬇️USER VALIDATION⬇️
+  //USER VALIDATION
   const session = await auth();
 
   if (!session || !session.user) {
@@ -64,17 +68,18 @@ export async function createTransaction(
       success: false,
     };
   }
-  //⬆️USER VALIDATION⬆️
+  //USER VALIDATION
 
-  //⬇️CREATE RECORD⬇️
+  //CREATE RECORD
   try {
-    await prisma.transaction.create({
+    const test = await prisma.transaction.create({
       data: {
         title: validation.data.title,
         amount:
           validation.data.type === "expense" ? -Math.abs(validation.data.amount) : Math.abs(validation.data.amount),
         description: validation.data.description,
         userId: session.user.id!,
+        categoryId: validation.data.categoryId || null,
       },
     });
 
@@ -97,5 +102,5 @@ export async function createTransaction(
       };
     }
   }
-  //⬆️CREATE RECORD⬆️
+  //CREATE RECORD
 }

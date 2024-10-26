@@ -34,7 +34,7 @@ export default async function DashboardPage() {
       </section>
 
       <section className="w-full flex items-center justify-center">
-        <div className="flex flex-col gap-5 w-11/12 md:w-1/2 lg:w-1/3 xl:w-3/5">
+        <div className="flex flex-col gap-5 w-11/12 lg:w-2/3 xl:w-3/5">
           <h3 className="text-xl">History</h3>
           <Divider />
           <Suspense fallback={<Loader />}>

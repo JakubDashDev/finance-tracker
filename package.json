@@ -12,6 +12,7 @@
   "dependencies": {
     "@nextui-org/react": "^2.4.2",
     "@prisma/client": "^5.16.1",
+    "@tanstack/react-query": "^5.59.15",
     "bcrypt": "^5.1.1",
     "dayjs": "^1.11.11",
     "embla-carousel-react": "^8.1.6",
@@ -20,6 +21,7 @@
     "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",
+    "react-icons": "^5.3.0",
     "recharts": "^2.12.7",
     "zod": "^3.23.8"
   },
@@ -33,7 +35,7 @@
     "postcss": "^8.4.39",
     "postcss-preset-mantine": "^1.15.0",
     "postcss-simple-vars": "^7.0.1",
-    "prisma": "^5.16.1",
+    "prisma": "^5.21.1",
     "tailwindcss": "^3.4.4",
     "typescript": "^5"
   }

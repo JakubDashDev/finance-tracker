@@ -61,6 +61,16 @@ export const config = {
               name: credentials.name,
               email: credentials.email,
               password: hashedPassword,
+              Category: {
+                createMany: {
+                  data: [
+                    { name: "food", color: "#edbe2f" },
+                    { name: "car", color: "#ed2fbe" },
+                    { name: "home", color: "#2f68ed" },
+                    { name: "pleasure", color: "#2f7bed" },
+                  ],
+                },
+              },
             },
           });
 
@@ -88,7 +98,7 @@ export const config = {
     jwt: async ({ token, user, trigger, session }) => {
       if (!!user) token.user = user;
 
-      if ((trigger = "update" && session)) {
+      if (trigger && session) {
         token = { ...token, user: session };
         return token;
       }

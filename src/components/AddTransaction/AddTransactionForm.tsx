@@ -1,10 +1,12 @@
 "use client";
 import { Input, ModalBody, Textarea, Button, Modal, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/react";
-import React, { useEffect } from "react";
+import React, { act, useEffect, useState } from "react";
 import FormButton from "../common/FormButton";
 import AddTransactionTypeSelect from "./AddTransactionTypeSelect";
 import { createTransaction } from "@/actions/create-transaction";
 import { useFormState } from "react-dom";
+import { Category } from "@/queries/get-user-categories";
+import AddTransactionCategory from "./AddTransactionCategory";
 
 function AddTransactionForm() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -42,6 +44,7 @@ function AddTransactionForm() {
                   isInvalid={!!formState.errors.title}
                   errorMessage={formState.errors.title?.join(", ")}
                 />
+                <AddTransactionCategory />
                 <div className="flex flex-col gap-2 lg:flex-row">
                   <AddTransactionTypeSelect
                     isInvalid={!!formState.errors.type}
