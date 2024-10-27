@@ -54,7 +54,7 @@ export async function createCategory(
       data: {
         name: validation.data.name,
         color: validation.data.color,
-        userId: session.user.id,
+        userId: session.user.id!,
       },
     });
 
