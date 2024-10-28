@@ -4,12 +4,8 @@ import { auth } from "../../lib/auth";
 import prisma from "../../lib/prismadb";
 import { Category, Transaction } from "@prisma/client";
 
-export interface UserTransactions extends Transaction {
-  category?: Category;
-}
-
 interface GetUserTransactionResponse {
-  transactions?: UserTransactions[];
+  transactions?: Transaction[];
   error?: string;
 }
 
