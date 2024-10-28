@@ -74,6 +74,7 @@ function TransactionsTable({ transactions }: TransactionsTableProps) {
     }
   }, []);
 
+  console.log(transactions);
   return (
     <Table isStriped aria-label="table">
       <TableHeader>
