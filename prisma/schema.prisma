@@ -67,12 +67,13 @@ model VerificationRequest {
 }
 
 model Transaction {
-  id          String    @id @default(uuid())
-  title       String
-  amount      Float
-  description String?
-  category    Category? @relation(fields: [categoryId], references: [id])
-  categoryId  String?
+  id              String    @id @default(uuid())
+  title           String
+  amount          Float
+  description     String?
+  category        Category? @relation(fields: [categoryId], references: [id])
+  categoryId      String?
+  transactionDate DateTime  @db.Date
 
   // Relation to user
   userId    String

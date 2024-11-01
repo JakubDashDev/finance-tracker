@@ -12,6 +12,7 @@ interface CreateTransactionState {
     type?: string[];
     categoryId?: string[];
     description?: string[];
+    transactionDate?: string[];
     _form?: string[];
   };
   success: boolean;
@@ -27,8 +28,9 @@ const createTransactionFormValidation = z.object({
     .positive("Value have to be positive")
     .multipleOf(0.01, "Please enter correct value"),
   type: string().min(1, "Please selet an option"),
-  categoryId: string().nullable(),
+  categoryId: string().optional(),
   description: string().optional(),
+  transactionDate: string({ message: "Please provide transaction date" }),
 });
 
 export async function createTransaction(
@@ -40,6 +42,7 @@ export async function createTransaction(
   const type = formData.get("type");
   const description = formData.get("description");
   const categoryId = formData.get("categoryId");
+  const transactionDate = formData.get("transactionDate");
 
   //FORM VALIDATION
   const validation = createTransactionFormValidation.safeParse({
@@ -48,6 +51,7 @@ export async function createTransaction(
     type,
     categoryId,
     description,
+    transactionDate,
   });
 
   if (!validation.success)
@@ -72,7 +76,7 @@ export async function createTransaction(
 
   //CREATE RECORD
   try {
-    const test = await prisma.transaction.create({
+    await prisma.transaction.create({
       data: {
         title: validation.data.title,
         amount:
@@ -80,6 +84,7 @@ export async function createTransaction(
         description: validation.data.description,
         userId: session.user.id!,
         categoryId: validation.data.categoryId || null,
+        transactionDate: new Date(validation.data.transactionDate!).toISOString() || new Date().toISOString(),
       },
     });
 

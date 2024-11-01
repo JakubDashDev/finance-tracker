@@ -4,7 +4,6 @@ import { UserTransactions } from "@/actions/get-user-transaction";
 import {
   Button,
   Chip,
-  getKeyValue,
   Table,
   TableBody,
   TableCell,
@@ -13,7 +12,6 @@ import {
   TableRow,
   Tooltip,
 } from "@nextui-org/react";
-import { Transaction } from "@prisma/client";
 import React from "react";
 
 interface TransactionsTableProps {
@@ -34,7 +32,12 @@ function TransactionsTable({ transactions }: TransactionsTableProps) {
 
     switch (columnKey) {
       case "title":
-        return <span>{transaction.title}</span>;
+        return (
+          <div className="flex gap-3">
+            <span className="text-gray-500">{transaction.transactionDate.toISOString().split("T")[0]}</span>
+            <span>{transaction.title}</span>
+          </div>
+        );
 
       case "amount":
         return (
@@ -74,7 +77,6 @@ function TransactionsTable({ transactions }: TransactionsTableProps) {
     }
   }, []);
 
-  console.log(transactions);
   return (
     <Table isStriped aria-label="table">
       <TableHeader>

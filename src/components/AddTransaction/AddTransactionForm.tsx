@@ -1,11 +1,21 @@
 "use client";
-import { Input, ModalBody, Textarea, Button, Modal, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/react";
-import React, { act, useEffect, useState } from "react";
+import {
+  Input,
+  ModalBody,
+  Textarea,
+  Button,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  useDisclosure,
+  DatePicker,
+} from "@nextui-org/react";
+import { parseDate } from "@internationalized/date";
+import React, { useEffect } from "react";
 import FormButton from "../common/FormButton";
 import AddTransactionTypeSelect from "./AddTransactionTypeSelect";
 import { createTransaction } from "@/actions/create-transaction";
 import { useFormState } from "react-dom";
-import { Category } from "@/queries/get-user-categories";
 import AddTransactionCategory from "./AddTransactionCategory";
 
 function AddTransactionForm() {
@@ -43,8 +53,19 @@ function AddTransactionForm() {
                   label="Transaction title"
                   isInvalid={!!formState.errors.title}
                   errorMessage={formState.errors.title?.join(", ")}
+                  isRequired
                 />
                 <AddTransactionCategory />
+                <DatePicker
+                  name="transactionDate"
+                  variant="underlined"
+                  label="Transaction Date"
+                  showMonthAndYearPickers
+                  isInvalid={!!formState.errors.transactionDate}
+                  errorMessage={formState.errors.transactionDate?.join(", ")}
+                  defaultValue={parseDate(new Date().toISOString().split("T")[0])}
+                  isRequired
+                />
                 <div className="flex flex-col gap-2 lg:flex-row">
                   <AddTransactionTypeSelect
                     isInvalid={!!formState.errors.type}
@@ -60,6 +81,7 @@ function AddTransactionForm() {
                     step={0.01}
                     isInvalid={!!formState.errors.amount}
                     errorMessage={formState.errors.amount?.join(", ")}
+                    isRequired
                   />
                 </div>
                 <Textarea
