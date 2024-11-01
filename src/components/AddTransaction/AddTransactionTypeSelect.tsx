@@ -26,6 +26,7 @@ function AddTransactionTypeSelect({ isInvalid, errorMessage }: AddTransactionTyp
       variant="underlined"
       items={selectData}
       label="Transaction type"
+      isRequired
       selectorIcon={<SelectorIcon />}
       isInvalid={isInvalid}
       errorMessage={errorMessage}
