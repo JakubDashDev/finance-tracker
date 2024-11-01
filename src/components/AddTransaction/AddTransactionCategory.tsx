@@ -64,7 +64,7 @@ function AddTransactionCategory() {
                   className="flex items-center gap-2 w-full border-none justify-start capitalize"
                   style={{ backgroundColor: category?.id === item.id ? "#4e4e57" : undefined }}
                   onClick={() => {
-                    setCategory(item);
+                    category ? setCategory(null) : setCategory(item);
                     onClose();
                   }}
                 >
