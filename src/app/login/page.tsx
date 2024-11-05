@@ -15,7 +15,7 @@ async function LoginPage({ searchParams }: LoginPageProps) {
   const session = await auth();
   const { callbackUrl } = searchParams;
 
-  if (session?.user) redirect("/dashboard");
+  if (session?.user) redirect(`/dashboard/${new Date().toISOString()}`);;
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">

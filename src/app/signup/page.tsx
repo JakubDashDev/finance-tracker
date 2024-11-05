@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 async function SignUpPage() {
   const session = await auth();
 
-  if (session?.user) redirect("/dashboard");
+  if (session?.user) redirect(`/dashboard/${new Date().toISOString()}`);
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="w-11/12 md:w-1/2 xl:w-1/4 flex items-center">
