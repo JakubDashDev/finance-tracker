@@ -18,7 +18,7 @@ Finance Tracker is a web application for managing personal finances, built with 
 - Zod
 
 ## Usage
-- **Live:** [Live](https://finance-tracker-jet-seven.vercel.app/)
+- **Live:** https://financetracker20.vercel.app/
 - **Login Credentials:**
   - Email: test@test.com
   - Password: 12345678
