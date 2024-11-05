@@ -7,7 +7,7 @@ import Link from "next/link";
 export default async function Home() {
   const session = await auth();
 
-  if (session) redirect("/dashboard");
+  if (session) redirect(`/dashboard/${new Date().toISOString()}`);
 
   return (
     <>

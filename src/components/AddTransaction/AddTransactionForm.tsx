@@ -18,7 +18,7 @@ import { createTransaction } from "@/actions/create-transaction";
 import { useFormState } from "react-dom";
 import AddTransactionCategory from "./AddTransactionCategory";
 
-function AddTransactionForm() {
+function AddTransactionForm({ slug }: { slug: string }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [formState, action] = useFormState(createTransaction, { errors: {}, success: false });
 
@@ -63,7 +63,7 @@ function AddTransactionForm() {
                   showMonthAndYearPickers
                   isInvalid={!!formState.errors.transactionDate}
                   errorMessage={formState.errors.transactionDate?.join(", ")}
-                  defaultValue={parseDate(new Date().toISOString().split("T")[0])}
+                  defaultValue={parseDate(slug.split("T")[0])}
                   isRequired
                 />
                 <div className="flex flex-col gap-2 lg:flex-row">

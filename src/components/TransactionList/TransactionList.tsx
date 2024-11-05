@@ -1,12 +1,10 @@
-import { getUserTransaction } from "@/actions/get-user-transaction";
-import { Divider, Skeleton } from "@nextui-org/react";
-import React, { Suspense } from "react";
+import React from "react";
 import TransactionItem from "./TransactionsTable";
+import { DashboardPageProps } from "@/app/dashboard/[slug]/page";
+import { getUserTransactionWithBalance } from "@/queries/user-transactions";
 
-async function TransactionList() {
-  const { transactions, error } = await getUserTransaction();
-
-  if (error) return <p className="text-red-500">Error: {error}</p>;
+async function TransactionList({ params }: DashboardPageProps) {
+  const { transactions } = await getUserTransactionWithBalance(new Date(params.slug.split("T")[0]));
 
   return (
     <div className="w-full flex flex-col gap-5">
