@@ -1,6 +1,6 @@
 "use client";
 import { DeleteTransaction } from "@/actions/delete-transaction";
-import { UserTransactions } from "@/actions/get-user-transaction";
+import { UserTransactions } from "@/queries/user-transactions";
 import {
   Button,
   Chip,
@@ -14,11 +14,7 @@ import {
 } from "@nextui-org/react";
 import React from "react";
 
-interface TransactionsTableProps {
-  transactions: UserTransactions[] | undefined;
-}
-
-function TransactionsTable({ transactions }: TransactionsTableProps) {
+function TransactionsTable({ transactions }: { transactions: UserTransactions[] }) {
   const handleDelete = async (transactionId: string) => {
     const confirm = window.confirm("Are you sure to delete this transaction?");
 
