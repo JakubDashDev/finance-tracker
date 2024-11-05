@@ -4,8 +4,9 @@ Finance Tracker is a web application for managing personal finances, built with 
 
 ## Features
 - **Expense Tracking**: Log and categorize expenses.
-- **Income Tracking**: Record and monitor various income sources.
-- **Financial Summary**: Summarize all expenses and incomes
+- **Income Tracking**: Record and categorize various income sources.
+- **Categories managment**: Create, edit, and delete categories - Allow to asign one category for each record.
+- **Financial Summary for each month**: View historical financial data from up to 4 years ago and project finances up to 4 years ahead.
 
 ## Tech stack
 - Nextjs
@@ -17,7 +18,7 @@ Finance Tracker is a web application for managing personal finances, built with 
 - Zod
 
 ## Usage
-- **Live:** https://finance-tracker-bftk7x0jf-jakubdotdevs-projects.vercel.app/
+- **Live:** [Live](https://finance-tracker-jet-seven.vercel.app/)
 - **Login Credentials:**
   - Email: test@test.com
   - Password: 12345678
