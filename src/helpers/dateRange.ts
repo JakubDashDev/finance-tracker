@@ -1,10 +1,17 @@
 /**
- * @param startDate Date or natively parseable string (e.g. 2024-04-01)
- * @param endDate Date or natively parseable string (e.g. 2024-04-01)
+ * @param startDate Date or natively parseable string (e.g. 2024-04-01) *OPTIONAL
+ * @param endDate Date or natively parseable string (e.g. 2024-04-01) *OPTIONAL
  * @returns Array of {key: e.g."2024-01-01",  label: e.g."January 2024" }
  */
 
-export function dateRange(startDate: string, endDate: string) {
+const d = new Date();
+const past = new Date(d.setFullYear(d.getFullYear() - 4));
+const feature = new Date(d.setFullYear(d.getFullYear() + 8));
+
+export function dateRange(
+  startDate: string = `${past.getFullYear()}-01-01`,
+  endDate: string = `${feature.getFullYear()}-01-01`
+) {
   let start = new Date(startDate);
   const end = new Date(endDate);
   const dates = [];
