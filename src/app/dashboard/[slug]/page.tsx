@@ -47,7 +47,7 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
           <h3 className="text-xl">History</h3>
           <Divider />
           <Suspense fallback={<Loader />}>
-            <TransactionList params={params} />
+            <TransactionList slug={params.slug} />
           </Suspense>
         </div>
       </section>

@@ -3,8 +3,8 @@ import TransactionItem from "./TransactionsTable";
 import { DashboardPageProps } from "@/app/dashboard/[slug]/page";
 import { getUserTransactionWithBalance } from "@/queries/user-transactions";
 
-async function TransactionList({ params }: DashboardPageProps) {
-  const { transactions } = await getUserTransactionWithBalance(new Date(params.slug.split("T")[0]));
+async function TransactionList({ slug }: { slug: string }) {
+  const { transactions } = await getUserTransactionWithBalance(new Date(slug));
 
   return (
     <div className="w-full flex flex-col gap-5">

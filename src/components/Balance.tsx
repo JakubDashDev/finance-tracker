@@ -3,7 +3,7 @@ import { getUserTransactionWithBalance } from "@/queries/user-transactions";
 import React from "react";
 
 async function Balance({ slug }: { slug: string }) {
-  const { balance } = await getUserTransactionWithBalance(new Date(slug.split("T")[0]));
+  const { balance } = await getUserTransactionWithBalance(new Date(slug));
 
   return (
     <div className="flex flex-col">

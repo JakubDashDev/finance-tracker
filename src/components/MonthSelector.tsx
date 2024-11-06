@@ -15,7 +15,7 @@ function MonthSelector({ slug }: { slug: string }) {
 
   const dates = dateRange(`${past.getFullYear()}-01-01`, `${feature.getFullYear()}-01-01`);
 
-  const slugAsDate = new Date(slug.split("T")[0]);
+  const slugAsDate = new Date(slug);
   const currentFilter = new Date(slugAsDate.getFullYear(), slugAsDate.getMonth(), 2).toISOString().split("T")[0];
 
   return (
