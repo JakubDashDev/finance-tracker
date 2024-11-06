@@ -9,12 +9,14 @@ import { auth } from "@/../lib/auth";
 import { redirect } from "next/navigation";
 import MonthSelector from "@/components/MonthSelector";
 import AddTransactionForm from "@/components/AddTransaction/AddTransactionForm";
+import SortSelect from "@/components/TransactionList/SortSelect";
 
 export interface DashboardPageProps {
   params: { slug: string };
+  searchParams: { sort: string; search: string };
 }
 
-export default async function DashboardPage({ params }: DashboardPageProps) {
+export default async function DashboardPage({ params, searchParams }: DashboardPageProps) {
   const session = await auth();
 
   if (!session?.user) redirect("/");
@@ -44,10 +46,13 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
 
       <section className="w-full flex items-center justify-center">
         <div className="flex flex-col gap-5 w-11/12 lg:w-2/3 xl:w-3/5">
-          <h3 className="text-xl">History</h3>
+          <div className="w-full gap-10 flex justify-between items-center">
+            <h3 className="text-xl">History</h3>
+            <SortSelect />
+          </div>
           <Divider />
-          <Suspense fallback={<Loader />}>
-            <TransactionList slug={params.slug} />
+          <Suspense fallback={<Loader />} key={searchParams.sort}>
+            <TransactionList slug={params.slug} searchParams={searchParams} />
           </Suspense>
         </div>
       </section>

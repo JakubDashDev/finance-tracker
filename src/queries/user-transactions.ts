@@ -1,6 +1,7 @@
 import { Category, Transaction } from "@prisma/client";
 import { auth } from "../../lib/auth";
 import prisma from "../../lib/prismadb";
+import { sortSearch } from "@/helpers/sortSearch";
 
 export interface UserTransactions extends Transaction {
   category: Category | null;
@@ -28,11 +29,19 @@ export async function getUserTransaction(currentFilter: Date): Promise<UserTrans
   });
 }
 
-export async function getUserTransactionWithBalance(currentFilter: Date) {
+export async function getUserTransactionWithBalance(
+  currentFilter: Date,
+  searchParams?: { sort?: string; search?: string }
+) {
   const session = await auth();
 
   if (!session || !session.user) throw new Error("Unauthorized!");
 
+  //sort 
+  const orderBy = sortSearch(searchParams?.sort);
+
+  //search
+  const search = searchParams?.search ?? "";
 
   const transactions = await prisma.transaction.findMany({
     where: {
@@ -45,12 +54,15 @@ export async function getUserTransactionWithBalance(currentFilter: Date) {
           },
         },
       ],
+      OR: [
+        { title: { contains: search } },
+        { description: { contains: search } },
+        { category: { name: { contains: search } } },
+      ],
     },
-    orderBy: { createdAt: "desc" },
+    orderBy,
     include: { category: true },
   });
-
-  
 
   const balance = transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
 

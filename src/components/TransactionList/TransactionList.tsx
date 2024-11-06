@@ -1,13 +1,19 @@
 import React from "react";
 import TransactionItem from "./TransactionsTable";
-import { DashboardPageProps } from "@/app/dashboard/[slug]/page";
 import { getUserTransactionWithBalance } from "@/queries/user-transactions";
+import SearchForm from "./SearchForm";
 
-async function TransactionList({ slug }: { slug: string }) {
-  const { transactions } = await getUserTransactionWithBalance(new Date(slug));
+interface TransactionListProps {
+  slug: string;
+  searchParams: { sort: string; search: string };
+}
+
+async function TransactionList({ slug, searchParams }: TransactionListProps) {
+  const { transactions } = await getUserTransactionWithBalance(new Date(slug), searchParams);
 
   return (
     <div className="w-full flex flex-col gap-5">
+      <SearchForm />
       <TransactionItem transactions={transactions} />
     </div>
   );
