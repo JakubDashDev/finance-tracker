@@ -22,8 +22,7 @@ export default async function DashboardPage({ params, searchParams }: DashboardP
   if (!session?.user) redirect("/");
 
   return (
-    <main className="w-full flex flex-col gap-10 items-center justify-center dark text-white">
-      <Header />
+    <>
       <section className="flex flex-col gap-5 w-11/12 lg:w-2/3 xl:w-3/5">
         <div className="w-full gap-10 flex justify-between items-center">
           <h3 className="text-xl">Balance</h3>
@@ -56,6 +55,6 @@ export default async function DashboardPage({ params, searchParams }: DashboardP
           </Suspense>
         </div>
       </section>
-    </main>
+    </>
   );
 }

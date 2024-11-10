@@ -11,7 +11,6 @@ export default async function Home() {
 
   return (
     <>
-      <Header />
       <div className="w-full flex flex-col items-center justify-center mt-64 text-white">
         <h1 className="text-2xl font-bold">Welcome</h1>
         <p className="text-lg">Please sign in to manage your transaction</p>
