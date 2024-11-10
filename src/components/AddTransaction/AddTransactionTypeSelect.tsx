@@ -5,6 +5,7 @@ import { SelectorIcon } from "../common/SelectorIcon";
 interface AddTransactionTypeSelectProps {
   isInvalid: boolean | undefined;
   errorMessage: string | undefined;
+  defaultSelected?: string;
 }
 
 const selectData = [
@@ -18,7 +19,7 @@ const selectData = [
   },
 ];
 
-function AddTransactionTypeSelect({ isInvalid, errorMessage }: AddTransactionTypeSelectProps) {
+function AddTransactionTypeSelect({ isInvalid, errorMessage, defaultSelected }: AddTransactionTypeSelectProps) {
   return (
     <Select
       name="type"
@@ -29,6 +30,7 @@ function AddTransactionTypeSelect({ isInvalid, errorMessage }: AddTransactionTyp
       selectorIcon={<SelectorIcon />}
       isInvalid={isInvalid}
       errorMessage={errorMessage}
+      defaultSelectedKeys={[defaultSelected ?? ""]}
       renderValue={(items) =>
         items.map((item) => (
           <div

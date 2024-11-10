@@ -7,9 +7,13 @@ import React, { useState } from "react";
 import { FaCog } from "react-icons/fa";
 import ManageCategoriesModal from "../Category/ManageCategoriesModal";
 
-function AddTransactionCategory() {
+interface TransactionCategorySelect {
+  defaultCategory?: Category | null;
+}
+
+function AddTransactionCategory({ defaultCategory }: TransactionCategorySelect) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const [category, setCategory] = useState<Category | null>(null);
+  const [category, setCategory] = useState<Category | null>(defaultCategory || null);
 
   const { data, isLoading, error, refetch } = useQuery({
     queryFn: () => GetUserCategories(),
