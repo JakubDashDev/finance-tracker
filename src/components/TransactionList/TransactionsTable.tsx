@@ -1,20 +1,13 @@
 "use client";
 import { DeleteTransaction } from "@/actions/delete-transaction";
-import { UserTransactions } from "@/queries/user-transactions";
-import {
-  Button,
-  Chip,
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
-  Tooltip,
-} from "@nextui-org/react";
+import { TransactionWithCategory } from "@/queries/user-transactions";
+import { Button, Chip, Tooltip } from "@nextui-org/react";
+import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/table";
+import { useRouter } from "next/navigation";
 import React from "react";
 
-function TransactionsTable({ transactions }: { transactions: UserTransactions[] }) {
+function TransactionsTable({ transactions }: { transactions: TransactionWithCategory[] }) {
+  const router = useRouter();
   const handleDelete = async (transactionId: string) => {
     const confirm = window.confirm("Are you sure to delete this transaction?");
 
@@ -23,8 +16,8 @@ function TransactionsTable({ transactions }: { transactions: UserTransactions[] 
     await DeleteTransaction(transactionId);
   };
 
-  const renderCell = React.useCallback((transaction: UserTransactions, columnKey: React.Key) => {
-    const cellValue = transaction[columnKey as keyof UserTransactions];
+  const renderCell = React.useCallback((transaction: TransactionWithCategory, columnKey: React.Key) => {
+    const cellValue = transaction[columnKey as keyof TransactionWithCategory];
 
     switch (columnKey) {
       case "title":
@@ -89,7 +82,13 @@ function TransactionsTable({ transactions }: { transactions: UserTransactions[] 
       {transactions!.length > 0 ? (
         <TableBody items={transactions}>
           {(item) => (
-            <TableRow key={item.id}>{(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}</TableRow>
+            <TableRow
+              key={item.id}
+              onClick={() => router.push(`/transaction/${item.id}`)}
+              className="cursor-pointer hover:bg-white/5 rounded-lg transition-colors"
+            >
+              {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+            </TableRow>
           )}
         </TableBody>
       ) : (
