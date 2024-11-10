@@ -3,11 +3,11 @@ import { auth } from "../../lib/auth";
 import prisma from "../../lib/prismadb";
 import { sortSearch } from "@/helpers/sortSearch";
 
-export interface UserTransactions extends Transaction {
+export interface TransactionWithCategory extends Transaction {
   category: Category | null;
 }
 
-export async function getUserTransaction(currentFilter: Date): Promise<UserTransactions[]> {
+export async function getUserTransaction(currentFilter: Date): Promise<TransactionWithCategory[]> {
   const session = await auth();
 
   if (!session || !session.user) throw new Error("Unauthorized!");
@@ -37,7 +37,7 @@ export async function getUserTransactionWithBalance(
 
   if (!session || !session.user) throw new Error("Unauthorized!");
 
-  //sort 
+  //sort
   const orderBy = sortSearch(searchParams?.sort);
 
   //search
@@ -71,4 +71,30 @@ export async function getUserTransactionWithBalance(
   const expense = amounts.filter((item) => item < 0).reduce((acc, item) => acc + item, 0);
 
   return { transactions, balance, income, expense };
+}
+
+export async function getTransactionById(id: string) {
+  const session = await auth();
+
+  if (!session || !session.user) throw new Error("Unauthorized!");
+
+  return await prisma.transaction.findFirstOrThrow({
+    where: { AND: [{ userId: session.user.id }, { id: id }] },
+    orderBy: { createdAt: "desc" },
+    include: { category: true },
+  });
+}
+
+export async function getTransactionsByCategory(categoryId: string | null) {
+  const session = await auth();
+
+  if (!session || !session.user) throw new Error("Unauthorized!");
+
+  if (!categoryId) return;
+
+  return await prisma.transaction.findMany({
+    where: { AND: [{ userId: session.user.id }, { categoryId: categoryId }] },
+    orderBy: { createdAt: "desc" },
+    include: { category: true },
+  });
 }
