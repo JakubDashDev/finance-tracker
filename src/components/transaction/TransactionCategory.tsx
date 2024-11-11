@@ -5,7 +5,7 @@ import { Button, Input, Modal, ModalContent, ModalHeader, Spinner, useDisclosure
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { FaCog } from "react-icons/fa";
-import ManageCategoriesModal from "../Category/ManageCategoriesModal";
+import ManageCategoriesModal from "../category/ManageCategoriesModal";
 
 interface TransactionCategorySelect {
   defaultCategory?: Category | null;

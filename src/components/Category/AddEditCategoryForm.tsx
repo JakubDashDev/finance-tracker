@@ -1,11 +1,9 @@
 "use client";
 import { createCategory } from "@/actions/create-category";
 import { GetUserCategories } from "@/queries/get-user-categories";
-import { Button, Input } from "@nextui-org/react";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
-import { useFormState } from "react-dom";
-import CategoryForm from "./CategoryForm";
+import React, { useState } from "react";
+import CategoryForm from "@/components/category/CategoryForm";
 import { updateCategory } from "@/actions/update-category";
 
 interface AddEditCategoryFormProps {

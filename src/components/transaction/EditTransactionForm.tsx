@@ -2,11 +2,11 @@
 
 import { DatePicker, Input, Textarea } from "@nextui-org/react";
 import React from "react";
-import AddTransactionCategory from "./AddTransaction/AddTransactionCategory";
-import AddTransactionTypeSelect from "./AddTransaction/AddTransactionTypeSelect";
+import AddTransactionCategory from "./TransactionCategory";
+import AddTransactionTypeSelect from "./TransactionTypeSelect";
 import { useFormState } from "react-dom";
 import { createTransaction } from "@/actions/create-transaction";
-import FormButton from "./common/FormButton";
+import FormButton from "../common/FormButton";
 import { TransactionWithCategory } from "@/queries/user-transactions";
 import { parseDate } from "@internationalized/date";
 import { updateTransaction } from "@/actions/update-transaction";

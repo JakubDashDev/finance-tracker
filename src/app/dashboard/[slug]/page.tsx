@@ -2,14 +2,14 @@ import Balance from "@/components/Balance";
 import Loader from "@/components/common/Loader";
 import Header from "@/components/Header";
 import Summary from "@/components/Summary";
-import TransactionList from "@/components/TransactionList/TransactionList";
+import TransactionList from "@/components/transaction/TransactionList";
 import { Divider } from "@nextui-org/react";
 import React, { Suspense } from "react";
 import { auth } from "@/../lib/auth";
 import { redirect } from "next/navigation";
 import MonthSelector from "@/components/MonthSelector";
-import AddTransactionForm from "@/components/AddTransaction/AddTransactionForm";
-import SortSelect from "@/components/TransactionList/SortSelect";
+import AddTransactionForm from "@/components/transaction/AddTransactionForm";
+import SortSelect from "@/components/transaction/SortSelect";
 
 export interface DashboardPageProps {
   params: { slug: string };

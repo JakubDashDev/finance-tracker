@@ -1,4 +1,4 @@
-import EditTransactionForm from "@/components/EditTransactionForm";
+import EditTransactionForm from "@/components/transaction/EditTransactionForm";
 import { getTransactionById, getTransactionsByCategory } from "@/queries/user-transactions";
 import React from "react";
 import { FaInfoCircle } from "react-icons/fa";

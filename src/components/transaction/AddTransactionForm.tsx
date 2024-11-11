@@ -13,10 +13,10 @@ import {
 import { parseDate } from "@internationalized/date";
 import React, { useEffect } from "react";
 import FormButton from "../common/FormButton";
-import AddTransactionTypeSelect from "./AddTransactionTypeSelect";
+import AddTransactionTypeSelect from "./TransactionTypeSelect";
 import { createTransaction } from "@/actions/create-transaction";
 import { useFormState } from "react-dom";
-import AddTransactionCategory from "./AddTransactionCategory";
+import AddTransactionCategory from "./TransactionCategory";
 
 function AddTransactionForm({ slug }: { slug: string }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
