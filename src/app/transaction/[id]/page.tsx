@@ -64,12 +64,12 @@ async function TransactionPage({ params }: TransactionPageProps) {
               )}
             </div>
 
-            <p className="w-full text-center mt-24">
+            {/* <p className="w-full text-center mt-24">
               For more statistics visit{" "}
               <Link href="/stats" className="text-blue-500 underline">
                 Statistics Page
               </Link>
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
