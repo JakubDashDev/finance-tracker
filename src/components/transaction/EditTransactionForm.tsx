@@ -10,6 +10,8 @@ import FormButton from "../common/FormButton";
 import { TransactionWithCategory } from "@/queries/user-transactions";
 import { parseDate } from "@internationalized/date";
 import { updateTransaction } from "@/actions/update-transaction";
+import { DeleteTransaction } from "@/actions/delete-transaction";
+import { useRouter } from "next/navigation";
 
 function EditTransactionForm({ transaction }: { transaction: TransactionWithCategory }) {
   const [formState, action] = useFormState(updateTransaction.bind(null, { transactionId: transaction.id }), {
@@ -17,11 +19,26 @@ function EditTransactionForm({ transaction }: { transaction: TransactionWithCate
     success: false,
   });
 
-  console.log(formState);
+  const router = useRouter();
+
+  const handleDelete = async () => {
+    const confirm = window.confirm("Are you sure to delete this transaction?");
+
+    if (!confirm) return;
+
+    const result = await DeleteTransaction(transaction.id);
+
+    if (result.error) {
+      alert(result.message);
+    }
+
+    router.back();
+    router.refresh();
+  };
 
   return (
     <form action={action}>
-      <div className="w-full xl:w-2/3 flex flex-col gap-4">
+      <div className="w-full flex flex-col gap-4">
         <Input
           variant="underlined"
           type="text"
@@ -80,7 +97,12 @@ function EditTransactionForm({ transaction }: { transaction: TransactionWithCate
         {formState.success && (
           <p className="text-green-600 bg-green-100 py-2 px-4 rounded text-sm">Transaction updated!</p>
         )}
-        <FormButton>Update Transaction</FormButton>
+        <div className="w-full flex flex-col sm:flex-row gap-3">
+          <FormButton>Save changes</FormButton>
+          <button type="button" onClick={handleDelete} className="min-w-[33%] py-3 bg-red-500 rounded-xl text-sm">
+            Delete
+          </button>
+        </div>
       </div>
     </form>
   );
