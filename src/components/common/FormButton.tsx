@@ -12,7 +12,13 @@ function FormButton({ children, isSuccess }: FormButtonProps) {
   const { pending } = useFormStatus();
 
   return (
-    <Button variant="solid" color={isSuccess ? "success" : "primary"} type="submit" isLoading={pending}>
+    <Button
+      variant="solid"
+      color={isSuccess ? "success" : "primary"}
+      type="submit"
+      isLoading={pending}
+      className="w-full"
+    >
       {isSuccess ? "Success" : children}
     </Button>
   );
