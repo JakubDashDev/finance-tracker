@@ -3,12 +3,12 @@
 import { dateRange } from "@/helpers/dateRange";
 import { Select, SelectItem } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useMemo } from "react";
 
 function MonthSelector({ slug }: { slug: string }) {
   const router = useRouter();
 
-  const dates = dateRange();
+  const dates = useMemo(dateRange, []);
 
   const slugAsDate = new Date(slug);
   const currentFilter = new Date(slugAsDate.getFullYear(), slugAsDate.getMonth(), 2).toISOString().split("T")[0];
