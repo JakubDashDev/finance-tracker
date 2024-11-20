@@ -13,7 +13,7 @@ import SortSelect from "@/components/transaction/SortSelect";
 
 export interface DashboardPageProps {
   params: { slug: string };
-  searchParams: { sort: string; search: string };
+  searchParams: { sort: string; search: string; page: string };
 }
 
 export default async function DashboardPage({ params, searchParams }: DashboardPageProps) {

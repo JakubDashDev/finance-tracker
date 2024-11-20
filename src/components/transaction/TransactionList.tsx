@@ -1,20 +1,20 @@
 import React from "react";
-import TransactionItem from "./TransactionsTable";
-import { getUserTransactionWithBalance } from "@/queries/user-transactions";
+import TransactionTable from "./TransactionsTable";
+import { getUserTransactionWithBalance, getUserTransactionWithCount } from "@/queries/user-transactions";
 import SearchForm from "./SearchForm";
 
 interface TransactionListProps {
   slug: string;
-  searchParams: { sort: string; search: string };
+  searchParams: { sort: string; search: string; page: string };
 }
 
 async function TransactionList({ slug, searchParams }: TransactionListProps) {
-  const { transactions } = await getUserTransactionWithBalance(new Date(slug), searchParams);
+  const { transactions, count } = await getUserTransactionWithCount(new Date(slug), searchParams);
 
   return (
     <div className="w-full flex flex-col gap-5">
       <SearchForm />
-      <TransactionItem transactions={transactions} />
+      <TransactionTable transactions={transactions} total={count} />
     </div>
   );
 }
