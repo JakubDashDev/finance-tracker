@@ -1,7 +1,6 @@
 import React from "react";
 import TransactionTable from "./TransactionsTable";
-import { getUserTransactionWithBalance, getUserTransactionWithCount } from "@/queries/user-transactions";
-import SearchForm from "./SearchForm";
+import { getUserTransactionWithCount } from "@/queries/user-transactions";
 
 interface TransactionListProps {
   slug: string;
@@ -11,12 +10,7 @@ interface TransactionListProps {
 async function TransactionList({ slug, searchParams }: TransactionListProps) {
   const { transactions, count } = await getUserTransactionWithCount(new Date(slug), searchParams);
 
-  return (
-    <div className="w-full flex flex-col gap-5">
-      <SearchForm />
-      <TransactionTable transactions={transactions} total={count} />
-    </div>
-  );
+  return <TransactionTable transactions={transactions} total={count} />;
 }
 
 export default TransactionList;
