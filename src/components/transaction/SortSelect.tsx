@@ -29,7 +29,7 @@ function SortSelect() {
       placeholder="Choose sort"
       className="max-w-xs"
       style={{ textTransform: "capitalize", border: "1px solid #9999" }}
-      defaultSelectedKeys={[searchParams.get("sort") ?? "createdAt-desc"]}
+      defaultSelectedKeys={[searchParams.get("sort") ?? "transactionDate-desc"]}
       onChange={(e) => handleClick(e.target.value)}
     >
       {(item) => <SelectItem key={item.value}>{item.label}</SelectItem>}

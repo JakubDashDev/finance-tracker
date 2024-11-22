@@ -1,13 +1,22 @@
 "use client";
 import { DeleteTransaction } from "@/actions/delete-transaction";
+import { PAGINATION_NUMBER } from "@/const";
 import { TransactionWithCategory } from "@/queries/user-transactions";
-import { Button, Chip, Tooltip } from "@nextui-org/react";
+import { Button, Chip, Pagination, Tooltip } from "@nextui-org/react";
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/table";
-import { useRouter } from "next/navigation";
-import React from "react";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useState } from "react";
 
-function TransactionsTable({ transactions }: { transactions: TransactionWithCategory[] }) {
+interface TransactionsTableProps {
+  transactions: TransactionWithCategory[];
+  page?: number;
+  total: number;
+}
+
+function TransactionsTable({ transactions, page, total }: TransactionsTableProps) {
   const router = useRouter();
+  const pathname = usePathname();
+
   const handleDelete = async (transactionId: string) => {
     const confirm = window.confirm("Are you sure to delete this transaction?");
 
@@ -22,7 +31,7 @@ function TransactionsTable({ transactions }: { transactions: TransactionWithCate
     switch (columnKey) {
       case "title":
         return (
-          <div className="flex gap-3">
+          <div className="flex flex-col-reverse md:flex-row gap-x-3">
             <span className="text-gray-500">{transaction.transactionDate.toISOString().split("T")[0]}</span>
             <span>{transaction.title}</span>
           </div>
@@ -67,7 +76,21 @@ function TransactionsTable({ transactions }: { transactions: TransactionWithCate
   }, []);
 
   return (
-    <Table isStriped aria-label="table">
+    <Table
+      isStriped
+      aria-label="table"
+      bottomContent={
+        <Pagination
+          isCompact
+          showControls
+          showShadow
+          color="primary"
+          page={page}
+          total={Math.ceil(total / PAGINATION_NUMBER) > 0 ? Math.ceil(total / PAGINATION_NUMBER) : 1}
+          onChange={(page) => router.push(`${pathname}?page=${page}`)}
+        />
+      }
+    >
       <TableHeader>
         <TableColumn key="title">TITLE</TableColumn>
         <TableColumn key="amount" width={180} minWidth={180}>
@@ -92,7 +115,7 @@ function TransactionsTable({ transactions }: { transactions: TransactionWithCate
           )}
         </TableBody>
       ) : (
-        <TableBody emptyContent={"No rows to display."}>{[]}</TableBody>
+        <TableBody emptyContent={"No transactions to display."}>{[]}</TableBody>
       )}
     </Table>
   );
