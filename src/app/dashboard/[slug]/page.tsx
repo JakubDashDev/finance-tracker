@@ -10,6 +10,8 @@ import { redirect } from "next/navigation";
 import MonthSelector from "@/components/MonthSelector";
 import AddTransactionForm from "@/components/transaction/AddTransactionForm";
 import SortSelect from "@/components/transaction/SortSelect";
+import TableLoader from "@/components/common/TableLoader";
+import SearchForm from "@/components/transaction/SearchForm";
 
 export interface DashboardPageProps {
   params: { slug: string };
@@ -50,9 +52,12 @@ export default async function DashboardPage({ params, searchParams }: DashboardP
             <SortSelect />
           </div>
           <Divider />
-          <Suspense fallback={<Loader />} key={searchParams.sort}>
-            <TransactionList slug={params.slug} searchParams={searchParams} />
-          </Suspense>
+          <div className="w-full flex flex-col gap-5">
+            <SearchForm />
+            <Suspense fallback={<TableLoader />} key={JSON.stringify(searchParams)}>
+              <TransactionList slug={params.slug} searchParams={searchParams} />
+            </Suspense>
+          </div>
         </div>
       </section>
     </>
