@@ -60,7 +60,7 @@ function Header() {
           <NavbarMenuItem key={`${item}-${index}`}>
             <Link
               className="w-full capitalize"
-              href={item === "dashboard" ? `` : item}
+              href={item === "dashboard" ? `/dashboard/${new Date().toISOString().split("T")[0]}` : `/${item}`}
               style={currentPath === item ? { color: "#006fee", fontWeight: "bold" } : undefined}
             >
               {item}
