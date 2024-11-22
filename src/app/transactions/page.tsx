@@ -1,16 +1,26 @@
+import TableLoader from "@/components/common/TableLoader";
+import AllTransactionsList from "@/components/transaction/AllTransactionsList";
+import Filters from "@/components/transaction/Filters";
 import SearchForm from "@/components/transaction/SearchForm";
 import SortSelect from "@/components/transaction/SortSelect";
 import TransactionsTable from "@/components/transaction/TransactionsTable";
 import { getAllTransactionsWithCount } from "@/queries/user-transactions";
-import React from "react";
+import React, { Suspense } from "react";
 
-export interface TransactionsPageProps {
-  searchParams: { sort: string; search: string; page: string };
+export interface TransactionsPageSearchParams {
+  sort?: string;
+  search?: string;
+  page?: string;
+  type?: string;
+  category?: string;
+  month?: string;
 }
 
-async function TransactionsPage({ searchParams }: TransactionsPageProps) {
-  const { transactions, count } = await getAllTransactionsWithCount(searchParams);
+export interface TransactionsPageProps {
+  searchParams: TransactionsPageSearchParams;
+}
 
+function TransactionsPage({ searchParams }: TransactionsPageProps) {
   return (
     <div className="w-full flex flex-col items-center justify-center gap-16">
       <section className="w-11/12 lg:w-4/5 2xl:w-3/5">
@@ -18,11 +28,10 @@ async function TransactionsPage({ searchParams }: TransactionsPageProps) {
           <SearchForm />
           <SortSelect />
         </div>
-        <TransactionsTable
-          transactions={transactions}
-          page={isNaN(Number(searchParams.page)) ? 1 : Number(searchParams.page)}
-          total={count}
-        />
+        <Filters />
+        <Suspense fallback={<TableLoader />} key={JSON.stringify(searchParams)}>
+          <AllTransactionsList searchParams={searchParams} />
+        </Suspense>
       </section>
     </div>
   );
