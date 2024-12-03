@@ -6,7 +6,11 @@ import { useQuery } from "@tanstack/react-query";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
-function CategoryFilterSelect() {
+interface CategorySelectProps {
+  setCategory: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function CategorySelect({ setCategory }: CategorySelectProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -15,18 +19,6 @@ function CategoryFilterSelect() {
     queryFn: () => GetUserCategories(),
     queryKey: ["Categories"],
   });
-
-  const params = new URLSearchParams(searchParams.toString());
-
-  const handleClick = (value: string) => {
-    if (value) {
-      params.set("category", value);
-    } else {
-      params.delete("category");
-    }
-
-    router.push(pathname + "?" + params.toString());
-  };
 
   if (error) {
     <div className="w-full h-full flex items-center justify-center">
@@ -39,14 +31,14 @@ function CategoryFilterSelect() {
   return (
     <Select
       isLoading={isLoading}
-      items={data?.categories?.concat({ name: "all", id: "all", color: "#000" }) || []}
+      items={data?.categories || []}
       selectionMode="single"
       placeholder="Choose category filter"
       aria-label="Transaction category filter"
       className="max-w-xs"
       style={{ textTransform: "capitalize" }}
-      defaultSelectedKeys={[searchParams.get("category") ?? "all"]}
-      onChange={(e) => handleClick(e.target.value)}
+      defaultSelectedKeys={[searchParams.get("category") ?? ""]}
+      onChange={(e) => setCategory(e.target.value)}
       renderValue={(items: SelectedItems<Category>) => {
         return items.map((item) => (
           <div key={item.key} className="flex items-center gap-2">
@@ -68,4 +60,4 @@ function CategoryFilterSelect() {
   );
 }
 
-export default CategoryFilterSelect;
+export default CategorySelect;

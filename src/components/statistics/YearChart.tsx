@@ -13,12 +13,14 @@ import {
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
+  TooltipProps,
   XAxis,
   YAxis,
 } from "recharts";
-import CustomTooltip from "./CustomTooltip";
+import { useRouter } from "next/navigation";
 
 function YearChart() {
+  const router = useRouter();
   const defaultValue = useMemo(
     () => ({
       start: parseDate(new Date(new Date().getFullYear(), 0, 1, 1).toISOString().split("T")[0]),
@@ -42,12 +44,14 @@ function YearChart() {
     const delayDebounceFn = setTimeout(() => {
       refetch();
       window.localStorage.setItem("calendarValue", JSON.stringify(calendarValue));
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(delayDebounceFn);
   }, [calendarValue, refetch]);
 
   const COLORS = ["#f31260", "#17c964"];
+
+  if (error) return <span className="text-red-400">{error.message || "Something went wrong. Please try again"}</span>;
 
   return (
     <div className="w-full bg-stone-700 shadow-md rounded-md p-3 ">
@@ -74,9 +78,11 @@ function YearChart() {
       </div>
       <div className="flex items-start justify-start w-full my-12 ">
         {isLoading || isFetching ? (
-          <div className="w-full flex items-center justify-center"><Spinner /></div>
+          <div className="w-full flex items-center justify-center">
+            <Spinner />
+          </div>
         ) : (
-          <ResponsiveContainer height={300}>
+          <ResponsiveContainer height={200}>
             <BarChart
               width={500}
               height={300}
@@ -91,12 +97,19 @@ function YearChart() {
               <CartesianGrid />
               <XAxis tick={{ fill: "#ccc" }} dataKey="name" />
               <YAxis tick={{ fill: "#ccc" }} unit="$" />
-              <Tooltip content={<CustomTooltip />} />
+              <Tooltip content={<CustomSelfTooltip />} />
               <ReferenceLine y={0} stroke="#f5a524" />
               <Bar dataKey="amount" fill="#a7acb1" unit="$">
                 {data!.map((entry, index) => {
                   const color = entry.amount > 0 ? COLORS[1] : COLORS[0];
-                  return <Cell key={entry.name} fill={color} />;
+                  return (
+                    <Cell
+                      key={entry.name}
+                      fill={color}
+                      onClick={() => router.push(`/dashboard/${entry.year}-${entry.month}-01`)}
+                      className="cursor-pointer"
+                    />
+                  );
                 })}
               </Bar>
             </BarChart>
@@ -108,3 +121,24 @@ function YearChart() {
 }
 
 export default YearChart;
+
+function CustomSelfTooltip({ active, payload, label }: TooltipProps<any, any>) {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-stone-500 rounded-lg p-5 flex flex-col items-center justify-center ">
+        <p className="label">{`${label}`}</p>
+        <div>
+          {payload.map((item) => (
+            <div key={item.name} style={{ display: "inline-block", padding: 10 }}>
+              <div className={item.value > 0 ? "text-green-500" : "text-red-300"}>
+                ${item.value > 0 ? `+${item.value}` : `${item.value}`}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+}
