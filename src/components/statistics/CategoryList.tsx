@@ -26,7 +26,7 @@ export default CategoryList;
 
 const CategoryItem = ({ item }: { item: { category: Category; transactions: Transaction[] } }) => (
   <Link
-    href={`/category/${item.category.id}`}
+    href={`/categories/${item.category.id}`}
     className="flex flex-row justify-between hover:bg-white/10 py-1 px-1 rounded-xl cursor-pointer"
   >
     <div className="flex gap-2 items-center justify-center max-w-[40%] ">
