@@ -8,7 +8,7 @@ async function CategoryList() {
   const transactions = await getCategoriesWithTransactions();
 
   return (
-    <div className="w-full xl:w-1/3 bg-stone-700 shadow-md rounded-md p-3 overflow-y-auto max-h-[300px] ">
+    <div className="w-full xl:w-1/3 bg-stone-700 shadow-md rounded-md p-3 overflow-y-auto max-h-[340px] ">
       <div className="w-full flex flex-col gap-y-2 justify-center items-center">
         <h2 className="font-bold">Categories</h2>
 

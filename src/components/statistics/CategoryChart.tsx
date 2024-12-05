@@ -113,7 +113,7 @@ function CategoryChart() {
   };
 
   return (
-    <div className="w-full xl:w-2/3 bg-stone-700 shadow-md rounded-md p-3 min-h-[300px]">
+    <div className="w-full xl:w-2/3 bg-stone-700 shadow-md rounded-md p-3 min-h-[340px]">
       <div className="w-full flex flex-col xl:flex-row xl:justify-between gap-y-2 justify-center items-center">
         <h2 className="font-bold">Category</h2>
         <CategorySelect setCategory={setCurrentCateogry} />
