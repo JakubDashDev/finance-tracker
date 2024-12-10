@@ -1,4 +1,5 @@
 import TableLoader from "@/components/common/TableLoader";
+import AddTransactionForm from "@/components/transaction/AddTransactionForm";
 import AllTransactionsList from "@/components/transaction/AllTransactionsList";
 import Filters from "@/components/transaction/Filters";
 import SearchForm from "@/components/transaction/SearchForm";
@@ -28,7 +29,10 @@ function TransactionsPage({ searchParams }: TransactionsPageProps) {
           <SearchForm />
           <SortSelect />
         </div>
-        <Filters />
+        <div className="flex flex-col sm:flex-row gap-3  justify-between my-5">
+          <Filters />
+          <AddTransactionForm />
+        </div>
         <Suspense fallback={<TableLoader />} key={JSON.stringify(searchParams)}>
           <AllTransactionsList searchParams={searchParams} />
         </Suspense>
