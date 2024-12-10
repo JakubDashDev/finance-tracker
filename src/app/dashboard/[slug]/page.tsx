@@ -42,7 +42,7 @@ export default async function DashboardPage({ params, searchParams }: DashboardP
       </section>
 
       <section>
-        <AddTransactionForm slug={params.slug} />
+        <AddTransactionForm defaultDate={params.slug} />
       </section>
 
       <section className="w-full flex items-center justify-center">

@@ -17,8 +17,17 @@ import AddTransactionTypeSelect from "./TransactionTypeSelect";
 import { createTransaction } from "@/actions/create-transaction";
 import { useFormState } from "react-dom";
 import AddTransactionCategory from "./TransactionCategory";
+import { Category } from "@prisma/client";
 
-function AddTransactionForm({ slug }: { slug: string }) {
+interface AddTransactionFormProps {
+  defaultDate?: string;
+  defaultCategory?: Category;
+}
+
+function AddTransactionForm({
+  defaultCategory,
+  defaultDate = new Date().toISOString().split("T")[0],
+}: AddTransactionFormProps) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [formState, action] = useFormState(createTransaction, { errors: {}, success: false });
 
@@ -55,7 +64,7 @@ function AddTransactionForm({ slug }: { slug: string }) {
                   errorMessage={formState.errors.title?.join(", ")}
                   isRequired
                 />
-                <AddTransactionCategory />
+                <AddTransactionCategory defaultCategory={defaultCategory} />
                 <DatePicker
                   name="transactionDate"
                   variant="underlined"
@@ -63,7 +72,7 @@ function AddTransactionForm({ slug }: { slug: string }) {
                   showMonthAndYearPickers
                   isInvalid={!!formState.errors.transactionDate}
                   errorMessage={formState.errors.transactionDate?.join(", ")}
-                  defaultValue={parseDate(slug.split("T")[0])}
+                  defaultValue={parseDate(defaultDate.split("T")[0])}
                   isRequired
                 />
                 <div className="flex flex-col gap-2 lg:flex-row">
