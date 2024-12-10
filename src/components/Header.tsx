@@ -19,7 +19,7 @@ function Header() {
   const currentPath = pathname.split("/")[1];
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const menuItems = ["dashboard", "transactions", "statistics"];
+  const menuItems = ["dashboard", "transactions", "statistics", "categories"];
 
   return (
     <Navbar className="bg-transparent" onMenuOpenChange={setIsMenuOpen}>
@@ -31,22 +31,16 @@ function Header() {
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4 " justify="center">
-        <NavbarItem style={currentPath === "dashboard" ? { color: "#006fee", fontWeight: "bold" } : undefined}>
-          <Link href={`/dashboard/${new Date().toISOString().split("T")[0]}`}>Dashboard</Link>
-        </NavbarItem>
-        <NavbarItem style={currentPath === "transactions" ? { color: "#006fee", fontWeight: "bold" } : undefined}>
+        {menuItems.map((item, index) => (
           <Link
-            href={{
-              pathname: "/transactions",
-              query: { page: 1 },
-            }}
+            key={index}
+            className="w-full capitalize"
+            href={item === "dashboard" ? `/dashboard/${new Date().toISOString().split("T")[0]}` : `/${item}`}
+            style={currentPath === item ? { color: "#006fee", fontWeight: "bold" } : undefined}
           >
-            Transactions
+            {item}
           </Link>
-        </NavbarItem>
-        <NavbarItem style={currentPath === "statistics" ? { color: "#006fee", fontWeight: "bold" } : undefined}>
-          <Link href="/statistics">Statistics</Link>
-        </NavbarItem>
+        ))}
       </NavbarContent>
 
       <NavbarContent justify="end">
