@@ -1,14 +1,10 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { auth } from "../../lib/auth";
 import prisma from "../../lib/prismadb";
 
-interface DeleteTransaction {
-  message?: string;
-  error?: string;
-}
-
-export async function DeleteCategory(categoryId: string) {
+export async function deleteCategory(categoryId: string, pathToRevalidate?: string) {
   const session = await auth();
 
   if (!session || !session.user) return { error: "You need to be sign in to do this!" };
@@ -20,6 +16,8 @@ export async function DeleteCategory(categoryId: string) {
         userId: session.user.id,
       },
     });
+
+    pathToRevalidate && revalidatePath(pathToRevalidate);
 
     return { message: "success!" };
   } catch (error) {
