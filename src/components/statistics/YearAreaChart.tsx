@@ -7,9 +7,13 @@ import React from "react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
 
-function YearAreaChart() {
+interface YearAreaChartProps {
+  categoryId?: string;
+}
+
+function YearAreaChart({ categoryId }: YearAreaChartProps) {
   const { data, isLoading, error, refetch, isFetching } = useQuery({
-    queryFn: () => getTransactionsForYearSummaryAreaChart(),
+    queryFn: () => getTransactionsForYearSummaryAreaChart(categoryId),
     queryKey: ["YearAreaChart"],
   });
 
@@ -21,7 +25,7 @@ function YearAreaChart() {
         <h2 className="font-bold">Last 12 months summary</h2>
 
         <div className="flex gap-3">
-          TOTAL: 
+          TOTAL:
           <div className="flex gap-1 items-center text-green-500 ">
             <FaArrowUp />${data?.reduce((acc, item) => item.income + acc, 0)}
           </div>
