@@ -1,11 +1,11 @@
 "use client";
 
-import { Category, GetUserCategories } from "@/queries/get-user-categories";
+import { GetUserCategories } from "@/queries/get-user-categories";
 import { Button, Input, Modal, ModalContent, ModalHeader, Spinner, useDisclosure } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { FaCog } from "react-icons/fa";
 import ManageCategoriesModal from "../category/ManageCategoriesModal";
+import { Category } from "@prisma/client";
 
 interface TransactionCategorySelect {
   defaultCategory?: Category | null;
@@ -61,7 +61,7 @@ function AddTransactionCategory({ defaultCategory }: TransactionCategorySelect) 
             <Spinner />
           ) : (
             <div className="flex flex-col gap-1">
-              {data?.categories?.map((item) => (
+              {data?.map((item) => (
                 <Button
                   variant="ghost"
                   key={item.id}
