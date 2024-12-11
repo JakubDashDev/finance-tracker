@@ -1,22 +1,25 @@
 "use client";
-
-import { createCategory, CreateCategoryState } from "@/actions/create-category";
-import { Category, GetUserCategories } from "@/queries/get-user-categories";
 import { Button, Input } from "@nextui-org/react";
-import { QueryObserverResult, RefetchOptions, useQueryClient } from "@tanstack/react-query";
-import React, { useEffect } from "react";
-import { useFormState } from "react-dom";
+import React, { useEffect, useState } from "react";
 import FormButton from "../common/FormButton";
+import { CreateCategoryState } from "@/actions/create-category";
 import { UpdateCategoryState } from "@/actions/update-category";
+import { useFormState } from "react-dom";
+import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
+import { GetUserCategories } from "@/queries/get-user-categories";
+import { Category } from "@prisma/client";
 
 interface CategoryFormProps {
   submitFunction: (...args: any[]) => Promise<CreateCategoryState | UpdateCategoryState>;
+  children: React.ReactNode;
   editCategoryData?: Category;
-  setIsInputActive: React.Dispatch<React.SetStateAction<boolean>>;
-  refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<GetUserCategories, Error>>;
+  refetchFn: (() => void) | ((options?: RefetchOptions) => Promise<QueryObserverResult<GetUserCategories, Error>>);
+  // refetch from react query or customRevalidatePath
 }
 
-function CategoryForm({ submitFunction, editCategoryData, setIsInputActive, refetch }: CategoryFormProps) {
+function CategoryForm({ children, submitFunction, editCategoryData, refetchFn }: CategoryFormProps) {
+  const [isActive, setIsActive] = useState(false);
+
   const updateCategory = submitFunction.bind(null, { categoryId: editCategoryData?.id });
   const createCategory = submitFunction.bind(null, { categoryId: undefined });
 
@@ -27,13 +30,12 @@ function CategoryForm({ submitFunction, editCategoryData, setIsInputActive, refe
 
   useEffect(() => {
     if (formState.success) {
-      refetch();
-
-      setIsInputActive((current) => !current);
+      setIsActive(false);
+      refetchFn();
     }
-  }, [formState.success, setIsInputActive, refetch]);
+  }, [formState]);
 
-  return (
+  return isActive ? (
     <form className="w-full flex flex-col items-center gap-5" action={action}>
       <div className="w-full flex items-center gap-3">
         <div className="!w-[25px] !h-[25px] !min-w-[25px] overflow-hidden rounded-[50%] flex items-center justify-center">
@@ -55,11 +57,13 @@ function CategoryForm({ submitFunction, editCategoryData, setIsInputActive, refe
       </div>
       <div className="flex gap-2 w-1/2">
         <FormButton>Save</FormButton>
-        <Button variant="flat" color="danger" type="button" onClick={() => setIsInputActive((current) => !current)}>
+        <Button variant="flat" color="danger" type="button" onClick={() => setIsActive((current) => !current)}>
           Cancel
         </Button>
       </div>
     </form>
+  ) : (
+    React.cloneElement(children as any, { onClick: () => setIsActive((current) => !current) })
   );
 }
 
