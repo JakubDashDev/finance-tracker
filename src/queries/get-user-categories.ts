@@ -2,6 +2,7 @@
 
 import { getUserSession } from "@/helpers/getUserSession";
 import prisma from "../../lib/prismadb";
+import { auth } from "../../lib/auth";
 
 export interface Category {
   id: string;
@@ -14,22 +15,12 @@ export interface GetUserCategories {
   error?: string;
 }
 
-export async function GetUserCategories(): Promise<GetUserCategories> {
-  const { user, error } = await getUserSession();
+export async function GetUserCategories() {
+  const session = await auth();
 
-  if (error) return { error };
+  if (!session || !session.user) throw new Error("Unauthorized!");
 
-  try {
-    const categories = await prisma.category.findMany({
-      where: { userId: user!.id },
-    });
-
-    return { categories };
-  } catch (error) {
-    if (error instanceof Error) {
-      return { error: error.message };
-    } else {
-      return { error: "Internal server error" };
-    }
-  }
+  return await prisma.category.findMany({
+    where: { userId: session.user!.id },
+  });
 }
