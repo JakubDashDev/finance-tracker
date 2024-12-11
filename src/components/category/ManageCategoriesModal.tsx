@@ -1,18 +1,20 @@
 "use client";
 
-import { DeleteCategory } from "@/actions/delete-category";
-import { Category, GetUserCategories } from "@/queries/get-user-categories";
-import { Button, Input, Modal, ModalContent, ModalHeader, Spinner, useDisclosure } from "@nextui-org/react";
-import { QueryObserverResult, RefetchOptions, useMutation } from "@tanstack/react-query";
+import { deleteCategory } from "@/actions/delete-category";
+import { Button, Modal, ModalContent, ModalHeader, Spinner, useDisclosure } from "@nextui-org/react";
+import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import { FaCog } from "react-icons/fa";
 import { FaPlus, FaTrash } from "react-icons/fa6";
-import AddEditCategoryForm from "./AddEditCategoryForm";
+import CategoryForm from "./CategoryForm";
+import { updateCategory } from "@/actions/update-category";
+import { createCategory } from "@/actions/create-category";
+import { Category } from "@prisma/client";
 
 interface ManageCategoriesModalProps {
-  refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<GetUserCategories, Error>>;
+  refetch: any;
   category: Category | null;
-  data: GetUserCategories | undefined;
+  data: Category[] | undefined;
   isLoading: boolean;
   error: Error | null;
 }
@@ -21,11 +23,11 @@ function ManageCategoriesModal({ category, data, isLoading, error, refetch }: Ma
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
   const {
-    mutate: deleteCategory,
+    mutate: deleteCategoryFn,
     isPending,
     error: deleteCategoryError,
   } = useMutation({
-    mutationFn: (categoryId: string) => DeleteCategory(categoryId),
+    mutationFn: (categoryId: string) => deleteCategory(categoryId),
     onSuccess: () => {
       refetch();
     },
@@ -54,9 +56,9 @@ function ManageCategoriesModal({ category, data, isLoading, error, refetch }: Ma
             <Spinner />
           ) : (
             <div className="flex flex-col gap-1">
-              {data?.categories?.map((item) => (
+              {data?.map((item: Category) => (
                 <div key={item.id} className="w-full flex justify-between items-center">
-                  <AddEditCategoryForm refetch={refetch} editCategoryData={item}>
+                  <CategoryForm refetchFn={refetch} submitFunction={updateCategory} editCategoryData={item}>
                     <Button
                       variant="light"
                       className="flex items-center gap-2 w-full  justify-start capitalize"
@@ -65,12 +67,12 @@ function ManageCategoriesModal({ category, data, isLoading, error, refetch }: Ma
                       <div style={{ width: 8, height: 8, backgroundColor: item.color, borderRadius: 9999 }}></div>
                       {item.name}
                     </Button>
-                  </AddEditCategoryForm>
+                  </CategoryForm>
 
                   <Button
                     variant="light"
                     color="danger"
-                    onClick={() => deleteCategory(item.id)}
+                    onClick={() => deleteCategoryFn(item.id)}
                     isDisabled={isPending || category?.id === item.id}
                   >
                     {isPending ? <Spinner /> : <FaTrash />}
@@ -79,12 +81,12 @@ function ManageCategoriesModal({ category, data, isLoading, error, refetch }: Ma
               ))}
 
               <div className="w-full flex items-center justify-center px-2 mt-5">
-                <AddEditCategoryForm refetch={refetch} editCategoryData={undefined}>
+                <CategoryForm refetchFn={refetch} submitFunction={createCategory}>
                   <Button variant="light">
                     <FaPlus />
                     Add Category
                   </Button>
-                </AddEditCategoryForm>
+                </CategoryForm>
               </div>
             </div>
           )}
