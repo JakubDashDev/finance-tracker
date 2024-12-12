@@ -11,6 +11,13 @@ async function getUserSession() {
   return session;
 }
 
+/**
+ * Get Transactions and prepare data to chart friendly strucutre
+ *
+ * @param categoryId? The uniqe Category id
+ * @returns The chart friendly array
+ * @use It was prepared with the intention of being used in YearAreaChart.tsx.
+ */
 export async function getTransactionsForYearSummaryAreaChart(categoryId?: string) {
   const session = await getUserSession();
 
@@ -64,6 +71,13 @@ export async function getTransactionsForYearSummaryAreaChart(categoryId?: string
   return months;
 }
 
+/**
+ * Get Transactions and prepare data to chart friendly strucutre
+ *
+ * @param categoryId? The uniqe Category id
+ * @returns The chart friendly array
+ * @use It was prepared with the intention of being used in CategoryChart.tsx
+ */
 export async function getTransactionForCategoryChart(categoryId: string) {
   const session = await getUserSession();
 
@@ -97,6 +111,14 @@ export async function getTransactionForCategoryChart(categoryId: string) {
   return { result, category };
 }
 
+/**
+ * Get Transactions and prepare data to chart friendly strucutre
+ *
+ * @param start The first day of the period for which we want to find the data
+ * @param end The last day of the period for which we want to find the data
+ * @returns The chart friendly array
+ * @use It was prepared with the intention of being used in YearChart.tsx
+ */
 export async function getTransactionForYearChart(start: string, end: string) {
   const session = await getUserSession();
 

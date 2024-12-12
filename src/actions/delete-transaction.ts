@@ -9,6 +9,15 @@ interface GetUserBalanceResponse {
   error?: string;
 }
 
+/**
+ * `DELETE` a transaction for the currently authenticated user.
+ *
+ * @param transactionId The unique ID of the transaction to delete.
+ *
+ * @returns A `Promise` resolving to an object containing:
+ *  - `message`: A success message if the transaction was deleted successfully.
+ *  - `error`: An error message if the operation failed.
+ */
 export async function DeleteTransaction(transactionId: string): Promise<GetUserBalanceResponse> {
   const session = await auth();
 

@@ -19,6 +19,19 @@ const updateCategoryValidation = z.object({
   name: z.string({ message: "This field is required!" }).min(1, "This field is required!"),
 });
 
+/**
+ * `UPDATE`an existing category for the currently authenticated user.
+ *
+ * @param categoryId The unique ID of the category to update.
+ * @param formState The initial state of the form, including error messages and success status.
+ * @param formData A `FormData` object containing the updated category inputs:
+ *  - `categoryColor`: The new color for the category.
+ *  - `categoryName`: The new name for the category.
+ *
+ * @returns A `Promise` resolving to an updated `UpdateCategoryState`:
+ *  - `errors`: Validation or server errors related to the form.
+ *  - `success`: `true` if the category was updated successfully, otherwise `false`.
+ */
 export async function updateCategory(
   { categoryId }: { categoryId: string },
   formState: UpdateCategoryState,

@@ -33,6 +33,23 @@ const createTransactionFormValidation = z.object({
   transactionDate: string({ message: "Please provide transaction date" }),
 });
 
+/**
+ * `UPDATE` an existing transaction for the currently authenticated user.
+ *
+ * @param transactionId The unique ID of the transaction to update.
+ * @param formState The initial state of the form, including error messages and success status.
+ * @param formData A `FormData` object containing the updated transaction details:
+ *  - `title`: The updated title of the transaction (minimum 3 characters).
+ *  - `amount`: The updated amount for the transaction (must be a positive number).
+ *  - `type`: The type of transaction, either "income" or "expense".
+ *  - `categoryId`: (Optional) The ID of the category associated with the transaction.
+ *  - `description`: (Optional) A description of the transaction.
+ *  - `transactionDate`: The updated date of the transaction.
+ *
+ * @returns A `Promise` resolving to an updated `UpdateTransactionState`:
+ *  - `errors`: Validation or server errors related to the form.
+ *  - `success`: `true` if the transaction was updated successfully, otherwise `false`.
+ */
 export async function updateTransaction(
   { transactionId }: { transactionId: string },
   formState: UpdateTransactionState,

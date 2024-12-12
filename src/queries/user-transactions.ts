@@ -6,16 +6,9 @@ import prisma from "../../lib/prismadb";
 import { sortSearch, SortValue } from "@/helpers/sortSearch";
 import { PAGINATION_NUMBER } from "@/const";
 import { TransactionsPageSearchParams } from "@/app/transactions/page";
-import { redirect } from "next/navigation";
 
 export interface TransactionWithCategory extends Transaction {
   category: Category | null;
-}
-
-export interface DefaultSearchParams {
-  sort?: string;
-  search?: string;
-  page?: string;
 }
 
 async function getUserSession() {
@@ -26,6 +19,20 @@ async function getUserSession() {
   return session;
 }
 
+/**
+ * GET a list of transactions linked to the currently logged-in user
+ *
+ * @param searchParams Optional search and filtering parameters:
+ *  - `search`: A search term.
+ *  - `page`: The page number for pagination.
+ *  - `sort`: Specifies the sorting order of the results.
+ *  - `type`: Specifies the type of transactions to retrieve.
+ *  - `category`: The category ID to filter by.
+ * @param dateFilter An optional date used to filter transactions. The function determines the range
+ * between the first and last day of the month for the given date.
+ *
+ * @returns A Promise resolving to an array of transaction objects, each including its associated category.
+ */
 export async function getAllTransactions(searchParams?: TransactionsPageSearchParams, dateFilter?: Date) {
   const session = await getUserSession();
 
@@ -64,6 +71,23 @@ export async function getAllTransactions(searchParams?: TransactionsPageSearchPa
   });
 }
 
+/**
+ * GET a user's transactions for a specific month along with financial summaries.
+ *
+ * @param currentFilter A `Date` object specifying the month to filter transactions.
+ * Transactions within the given month's range will be included.
+ * 
+ * @param searchParams Optional search and sorting parameters:
+ *  - `sort`: Sorting criteria.
+ *  - `search`: A search term.
+ *
+ * @returns An object containing:
+ *  - `transactions`: The list of transactions matching the filter.
+ *  - `balance`: The total balance of all transactions.
+ *  - `income`: The total income from positive transaction amounts.
+ *  - `expense`: The total expense from negative transaction amounts.
+
+ */
 export async function getUserTransactionWithBalance(
   currentFilter: Date,
   searchParams?: { sort?: string; search?: string }
@@ -108,6 +132,14 @@ export async function getUserTransactionWithBalance(
   return { transactions, balance, income, expense };
 }
 
+/**
+ * GET a single transaction by its ID for the currently logged-in user.
+ *
+ * @param id The unique id of the transaction to retrieve.
+ *
+ * @returns A Promise resolving to the transaction object, including its associated category.
+
+ */
 export async function getTransactionById(id: string) {
   const session = await auth();
 

@@ -13,6 +13,11 @@ async function getUserSession() {
   return session;
 }
 
+/**
+ * GET all categories associated with the currently logged-in user.
+ *
+ * @returns A Promise resolving to an array of category objects.
+ */
 export async function getAllUserCategories() {
   const session = await getUserSession();
 
@@ -21,7 +26,17 @@ export async function getAllUserCategories() {
   });
 }
 
-export async function getSingleCategoryWithTransactions(categoryId: string, searchParams: string) {
+/**
+ * GET a single category along with its associated transactions for the currently logged-in user.
+ *
+ * @param categoryId The unique ID of the category to retrieve.
+ * @param searchQuery? A search term to filter transactions by title, description, or category name. If not provided, all transactions for the category will be returned.
+ *
+ * @returns A Promise resolving to an object containing:
+ *  - `category`: The retrieved category object.
+ *  - `transactions`: An array of transactions associated with the category, filtered by the search query if provided.
+ */
+export async function getSingleCategoryWithTransactions(categoryId: string, searchQuery?: string) {
   const session = await getUserSession();
 
   const category = await prisma.category.findFirst({
@@ -33,7 +48,7 @@ export async function getSingleCategoryWithTransactions(categoryId: string, sear
 
   if (!category) redirect("/categories");
 
-  const search = searchParams ?? "";
+  const search = searchQuery ?? "";
 
   const transactions = await prisma.transaction.findMany({
     where: {
@@ -52,6 +67,13 @@ export async function getSingleCategoryWithTransactions(categoryId: string, sear
   return { category, transactions };
 }
 
+/**
+ * GET all categories for the currently logged-in user, along with their associated transactions.
+ *
+ * @returns A Promise resolving to an array of objects, where each object contains:
+ *  - `category`: A category object belonging to the user.
+ *  - `transactions`: An array of transactions associated with the category.
+ */
 export async function getCategoriesWithTransactions() {
   const session = await getUserSession();
 

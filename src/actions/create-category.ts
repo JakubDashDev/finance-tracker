@@ -19,6 +19,19 @@ const createCategoryValidation = z.object({
   name: z.string({ message: "This field is required!" }).min(1, "This field is required!"),
 });
 
+/**
+ * CREATE a new category for the currently authenticated user.
+ *
+ * @param categoryId An object containing the `categoryId`. Currently, this should be `undefined` as it's not used in this function.
+ * @param formState The initial state of the form, including error messages and success status.
+ * @param formData A `FormData` object containing the form inputs:
+ *  - `categoryColor`: The color of the category.
+ *  - `categoryName`: The name of the category.
+ *
+ * @returns A `Promise` resolving to an updated `CreateCategoryState`:
+ *  - `errors`: Validation or server errors related to the form.
+ *  - `success`: `true` if the category was created successfully, otherwise `false`.
+ */
 export async function createCategory(
   { categoryId }: { categoryId: undefined },
   formState: CreateCategoryState,

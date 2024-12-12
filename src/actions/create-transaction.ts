@@ -33,6 +33,22 @@ const createTransactionFormValidation = z.object({
   transactionDate: string({ message: "Please provide transaction date" }),
 });
 
+/**
+ * CREATE a new transaction for the currently authenticated user.
+ *
+ * @param formState The initial state of the form, including error messages and success status.
+ * @param formData A `FormData` object containing the form inputs:
+ *  - `title`: The title of the transaction (minimum 3 characters).
+ *  - `amount`: The amount for the transaction (must be a positive number).
+ *  - `type`: The type of transaction, either "income" or "expense".
+ *  - `categoryId`: (Optional) The ID of the category associated with the transaction.
+ *  - `description`: (Optional) A description of the transaction.
+ *  - `transactionDate`: The date of the transaction.
+ *
+ * @returns A `Promise` resolving to an updated `CreateTransactionState`:
+ *  - `errors`: Validation or server errors related to the form.
+ *  - `success`: `true` if the transaction was created successfully, otherwise `false`.
+ */
 export async function createTransaction(
   formState: CreateTransactionState,
   formData: FormData
