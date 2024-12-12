@@ -6,14 +6,16 @@ import { CreateCategoryState } from "@/actions/create-category";
 import { UpdateCategoryState } from "@/actions/update-category";
 import { useFormState } from "react-dom";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
-import { GetUserCategories } from "@/queries/get-user-categories";
+import { getAllUserCategories } from "@/queries/user-categories";
 import { Category } from "@prisma/client";
 
 interface CategoryFormProps {
   submitFunction: (...args: any[]) => Promise<CreateCategoryState | UpdateCategoryState>;
   children: React.ReactNode;
   editCategoryData?: Category;
-  refetchFn: (() => void) | ((options?: RefetchOptions) => Promise<QueryObserverResult<GetUserCategories, Error>>);
+  refetchFn:
+    | (() => void)
+    | ((options?: RefetchOptions) => Promise<QueryObserverResult<typeof getAllUserCategories, Error>>);
   // refetch from react query or customRevalidatePath
 }
 

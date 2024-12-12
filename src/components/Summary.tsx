@@ -1,4 +1,3 @@
-import { DashboardPageProps } from "@/app/dashboard/[slug]/page";
 import { getUserTransactionWithBalance } from "@/queries/user-transactions";
 import React from "react";
 

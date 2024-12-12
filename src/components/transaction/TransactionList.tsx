@@ -1,6 +1,6 @@
 import React from "react";
 import TransactionTable from "./TransactionsTable";
-import { getUserTransactionWithCount } from "@/queries/user-transactions";
+import { getAllTransactions } from "@/queries/user-transactions";
 
 interface TransactionListProps {
   slug: string;
@@ -8,9 +8,9 @@ interface TransactionListProps {
 }
 
 async function TransactionList({ slug, searchParams }: TransactionListProps) {
-  const { transactions, count } = await getUserTransactionWithCount(new Date(slug), searchParams);
+  const transactions = await getAllTransactions(searchParams, new Date(slug));
 
-  return <TransactionTable transactions={transactions} total={count} />;
+  return <TransactionTable transactions={transactions} total={transactions.length} />;
 }
 
 export default TransactionList;

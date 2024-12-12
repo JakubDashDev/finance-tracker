@@ -4,8 +4,6 @@ import AllTransactionsList from "@/components/transaction/AllTransactionsList";
 import Filters from "@/components/transaction/Filters";
 import SearchForm from "@/components/transaction/SearchForm";
 import SortSelect from "@/components/transaction/SortSelect";
-import TransactionsTable from "@/components/transaction/TransactionsTable";
-import { getAllTransactionsWithCount } from "@/queries/user-transactions";
 import React, { Suspense } from "react";
 
 export interface TransactionsPageSearchParams {
@@ -14,7 +12,6 @@ export interface TransactionsPageSearchParams {
   page?: string;
   type?: string;
   category?: string;
-  month?: string;
 }
 
 export interface TransactionsPageProps {

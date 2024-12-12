@@ -1,12 +1,10 @@
-import AddEditCategoryForm from "@/components/category/AddEditCategoryForm";
 import CategoryPageBody from "@/components/categoryPage/CategoryPageBody";
 import YearAreaChart from "@/components/statistics/YearAreaChart";
 import AddTransactionForm from "@/components/transaction/AddTransactionForm";
 import SearchForm from "@/components/transaction/SearchForm";
-import TransactionList from "@/components/transaction/TransactionList";
 import TransactionsTable from "@/components/transaction/TransactionsTable";
-import { getSingleCategoryWithTransactions, getTransactionsForYearSummaryAreaChart } from "@/queries/user-transactions";
-import { Button, Divider, Input } from "@nextui-org/react";
+import { getSingleCategoryWithTransactions } from "@/queries/user-categories";
+import { Divider } from "@nextui-org/react";
 import React from "react";
 
 interface TransactionPageProps {

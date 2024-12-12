@@ -1,6 +1,5 @@
 "use client";
 
-import { getTransactionForYearChart } from "@/queries/user-transactions";
 import { DateRangePicker, DateValue, RangeValue, Spinner } from "@nextui-org/react";
 import { parseDate } from "@internationalized/date";
 import { useQuery } from "@tanstack/react-query";
@@ -18,6 +17,7 @@ import {
   YAxis,
 } from "recharts";
 import { useRouter } from "next/navigation";
+import { getTransactionForYearChart } from "@/queries/user-transactions-forChart";
 
 function YearChart() {
   const router = useRouter();

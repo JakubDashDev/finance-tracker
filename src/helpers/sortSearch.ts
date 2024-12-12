@@ -1,11 +1,13 @@
 import { SORT_ARR } from "@/const";
 
+export type SortValue = (typeof SORT_ARR)[number]["value"];
+
 /**
- * @param sort Basically any string, but for return real orderBy param should be a string that is in the SORT_ARR
+ * @param sort A string that is contained in the SORT_ARR @typedef SortValue
  * @returns Object { [sortKey]: [sortValue] }
  */
 
-export function sortSearch(sort?: string) {
+export function sortSearch(sort?: SortValue) {
   //Default value
   let orderBy = { createdAt: "desc" } as any;
 

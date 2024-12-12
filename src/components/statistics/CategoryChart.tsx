@@ -1,11 +1,11 @@
 "use client";
-import { getTransactionForCategoryChart } from "@/queries/user-transactions";
 import { Spinner } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import React, { useCallback, useEffect, useState } from "react";
 import { Pie, PieChart, ResponsiveContainer, Sector } from "recharts";
 import CategorySelect from "../category/CategorySelect";
 import { useSearchParams } from "next/navigation";
+import { getTransactionForCategoryChart } from "@/queries/user-transactions-forChart";
 
 const renderActiveShape = (props: any) => {
   const RADIAN = Math.PI / 180;

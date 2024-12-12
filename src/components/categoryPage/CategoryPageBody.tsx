@@ -7,9 +7,7 @@ import { Category } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import { deleteCategory } from "@/actions/delete-category";
 import { FaTrash } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
 import { updateCategory } from "@/actions/update-category";
-import { revalidatePath } from "next/cache";
 import customRevalidatePath from "@/actions/revalidateTag";
 
 interface CategoryPageBodyProps {

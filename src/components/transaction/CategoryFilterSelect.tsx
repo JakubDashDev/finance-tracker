@@ -1,10 +1,10 @@
 "use client";
-
-import { Category, GetUserCategories } from "@/queries/get-user-categories";
+import React from "react";
 import { Select, SelectedItems, SelectItem } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React from "react";
+import { getAllUserCategories } from "@/queries/user-categories";
+import { Category } from "@prisma/client";
 
 function CategoryFilterSelect() {
   const searchParams = useSearchParams();
@@ -12,7 +12,7 @@ function CategoryFilterSelect() {
   const router = useRouter();
 
   const { data, isLoading, error, refetch, isFetching } = useQuery({
-    queryFn: () => GetUserCategories(),
+    queryFn: () => getAllUserCategories(),
     queryKey: ["Categories"],
   });
 
@@ -35,11 +35,10 @@ function CategoryFilterSelect() {
       </span>
     </div>;
   }
-
   return (
     <Select
       isLoading={isLoading}
-      items={data?.categories?.concat({ name: "all", id: "all", color: "#000" }) || []}
+      items={data?.concat({ name: "all", id: "all", color: "#000", userId: "" }) || []}
       selectionMode="single"
       placeholder="Choose category filter"
       aria-label="Transaction category filter"

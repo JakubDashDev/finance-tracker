@@ -1,6 +1,5 @@
 import Balance from "@/components/Balance";
 import Loader from "@/components/common/Loader";
-import Header from "@/components/Header";
 import Summary from "@/components/Summary";
 import TransactionList from "@/components/transaction/TransactionList";
 import { Divider } from "@nextui-org/react";

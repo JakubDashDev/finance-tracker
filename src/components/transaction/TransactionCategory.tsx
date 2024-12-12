@@ -1,11 +1,11 @@
 "use client";
 
-import { GetUserCategories } from "@/queries/get-user-categories";
 import { Button, Input, Modal, ModalContent, ModalHeader, Spinner, useDisclosure } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import ManageCategoriesModal from "../category/ManageCategoriesModal";
 import { Category } from "@prisma/client";
+import { getAllUserCategories } from "@/queries/user-categories";
 
 interface TransactionCategorySelect {
   defaultCategory?: Category | null;
@@ -16,7 +16,7 @@ function AddTransactionCategory({ defaultCategory }: TransactionCategorySelect) 
   const [category, setCategory] = useState<Category | null>(defaultCategory || null);
 
   const { data, isLoading, error, refetch } = useQuery({
-    queryFn: () => GetUserCategories(),
+    queryFn: () => getAllUserCategories(),
     queryKey: ["Categories"],
   });
 

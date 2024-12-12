@@ -7,6 +7,6 @@ export const SORT_ARR = [
   { label: "Date Descending", value: "transactionDate-desc" },
   { label: "Create Date Ascending", value: "createdAt-asc" },
   { label: "Create Date Descending", value: "createdAt-desc" },
-];
+] as const;
 
 export const PAGINATION_NUMBER = 20;

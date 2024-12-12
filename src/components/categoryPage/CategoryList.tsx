@@ -1,4 +1,3 @@
-import { getCategoriesWithTransactions } from "@/queries/user-transactions";
 import React, { useMemo } from "react";
 import CategoryItem from "./CategoryItem";
 import CategoryForm from "../category/CategoryForm";
@@ -6,6 +5,7 @@ import { Button } from "@nextui-org/react";
 import { createCategory } from "@/actions/create-category";
 import customRevalidatePath from "@/actions/revalidateTag";
 import { FaPlus } from "react-icons/fa6";
+import { getCategoriesWithTransactions } from "@/queries/user-categories";
 
 async function CategoryList() {
   const categoryWithTransactions = await getCategoriesWithTransactions();

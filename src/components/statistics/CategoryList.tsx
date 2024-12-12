@@ -1,4 +1,4 @@
-import { getCategoriesWithTransactions } from "@/queries/user-transactions";
+import { getCategoriesWithTransactions } from "@/queries/user-categories";
 import { Category, Transaction } from "@prisma/client";
 import Link from "next/link";
 import React from "react";

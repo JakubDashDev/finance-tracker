@@ -1,6 +1,6 @@
 "use client";
 
-import { getTransactionForYearChart, getTransactionsForYearSummaryAreaChart } from "@/queries/user-transactions";
+import { getTransactionsForYearSummaryAreaChart } from "@/queries/user-transactions-forChart";
 import { Spinner } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
